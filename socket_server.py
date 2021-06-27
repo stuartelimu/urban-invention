@@ -18,6 +18,13 @@ def server_program():
         if not data:
             break
         print('from connected user: ' + str(data))
+        try:
+            f = open(data.lower().strip(), 'rb')
+            l = f.read(1024)
+            conn.send(l)
+        except IOError:
+            l = 'file not found, please enter another file name'
+            conn.send(l.encode())
         data = input(' -> ')
         conn.send(data.encode()) # send data to the client
 
